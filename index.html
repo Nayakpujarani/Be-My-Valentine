@@ -81,7 +81,7 @@
             <img id="mainGif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpwaGZ4ZzB4ZzB4ZzB4ZzB4ZzB4ZzB4ZzB4ZzB4ZzB4ZzB4ZzAmbGl2ZT1mYWxzZQ/MDJ9uLGiTLvDpYkhwH/giphy.gif" alt="Cute Bear">
         </div>
         
-        <h1 id="question">Will you be my Valentine?</h1>
+        <h1 id="question">Will you be mine forever?</h1>
         
         <div class="buttons">
             <button id="noBtn">No</button>
@@ -97,11 +97,11 @@
         const music = document.getElementById('valentineMusic');
 
         // 1. PERSONALIZATION LOGIC
-        // This checks the URL for ?name=YourName
+        // This checks the URL for ?name=bubu
         const urlParams = new URLSearchParams(window.location.search);
-        const name = urlParams.get('name');
+        const name = urlParams.get('bubu');
         if (name) {
-            questionText.innerText = `Will you be my Valentine, ${Satya}? 🌹`;
+            questionText.innerText = `Will you be mine forever, ${Satya}? 🌹`;
         }
 
         // 2. THE DANCING "NO" BUTTON LOGIC
