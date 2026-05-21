@@ -3,171 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For You ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <title>A Special Message For You</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka+One&display=swap" rel="stylesheet">
     <style>
         body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
-            background-color: #ffebee;
-            font-family: 'Indie Flower', cursive; /* Handwritten style */
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ffe5ec 0%, #ffc2d1 100%);
+            font-family: 'Caveat', cursive;
             overflow: hidden;
             text-align: center;
         }
 
-        h1 {
-            color: #d32f2f;
-            font-size: 3rem;
-            margin-bottom: 10px;
-            padding: 0 20px;
+        .container {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
+            backdrop-filter: blur(10px);
+            max-width: 90%;
+            width: 450px;
+            position: relative;
+            z-index: 2;
         }
 
-        .gif-container img {
-            width: 250px;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-
-        .buttons {
+        /* Creative CSS replacement for the broken content card */
+        .media-box {
+            width: 100%;
+            height: 180px;
+            background: #2b2d42;
+            border-radius: 16px;
             display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 25px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.4);
+            position: relative;
+        }
+
+        /* Pulsing Heart Animation instead of a broken link */
+        .heart {
+            background-color: #ff4d6d;
+            display: inline-block;
+            height: 50px;
+            position: relative;
+            transform: rotate(-45deg);
+            width: 50px;
+            animation: pulse 1.2s infinite;
+        }
+
+        .heart:before, .heart:after {
+            content: "";
+            background-color: #ff4d6d;
+            border-radius: 50%;
+            height: 50px;
+            position: absolute;
+            width: 50px;
+        }
+
+        .heart:before { top: -25px; left: 0; }
+        .heart:after { left: 25px; top: 0; }
+
+        @keyframes pulse {
+            0% { transform: scale(1) rotate(-45deg); }
+            50% { transform: scale(1.2) rotate(-45deg); }
+            100% { transform: scale(1) rotate(-45deg); }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            color: #ff4d6d;
+            margin: 10px 0;
+            line-height: 1.2;
+        }
+
+        .sub-text {
+            font-size: 1.8rem;
+            color: #6c757d;
+            margin-bottom: 30px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
             gap: 20px;
-            margin-top: 20px;
-            position: relative; /* Needed for absolute positioning context */
+            align-items: center;
+            height: 60px;
+            position: relative;
         }
 
         button {
-            padding: 15px 40px;
-            font-size: 1.5rem;
+            padding: 12px 35px;
+            font-size: 1.8rem;
+            font-family: 'Fredoka One', cursive;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            font-family: 'Indie Flower', cursive;
-            transition: transform 0.2s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        #yesBtn {
-            background-color: #ff4081;
+        #yes-btn {
+            background-color: #ff4d6d;
             color: white;
         }
-        
-        #yesBtn:hover {
+
+        #yes-btn:hover {
             transform: scale(1.1);
-            background-color: #f50057;
+            background-color: #ff758f;
         }
 
-        #noBtn {
-            background-color: #e0e0e0;
-            color: #333;
-            position: absolute; /* Allows it to move freely */
+        #no-btn {
+            background-color: #e2e8f0;
+            color: #64748b;
+            position: absolute;
+            right: 80px;
+        }
+
+        /* Floating music bar player style */
+        .audio-player {
+            margin-top: 25px;
+            font-size: 1.2rem;
+            color: #ff758f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* Success screen styles */
+        .success-heading {
+            display: none;
+            font-size: 4rem;
+            color: #ff4d6d;
+            animation: bounce 0.8s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
         }
     </style>
 </head>
 <body>
 
-    <audio id="valentineMusic" loop>
-        <source src="song.mp3" type="audio/mpeg">
-    </audio>
-
     <div class="container">
-        <div class="gif-container">
-            <img id="mainGif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpwaGZ4ZzB4ZzB4ZzB4ZzB4ZzB4ZzB4ZzB4ZzB4ZzB4ZzB4ZzAmbGl2ZT1mYWxzZQ/MDJ9uLGiTLvDpYkhwH/giphy.gif" alt="Cute Bear">
+        <div class="media-box" id="media-box">
+            <div class="heart"></div>
         </div>
-        
-        <h1 id="question">Will you be mine forever?</h1>
-        
-        <div class="buttons">
-            <button id="noBtn">No</button>
-            <button id="yesBtn" style="margin-left: 100px;">Yes</button>
+
+        <div id="proposal-content">
+            <h1 id="main-title">Babbu...</h1>
+            <p class="sub-text">Will you be mine forever?</p>
+            
+            <div class="btn-container">
+                <button id="yes-btn" onclick="celebrate()">Yes</button>
+                <button id="no-btn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+            </div>
+        </div>
+
+        <div id="success-content" style="display: none;">
+            <h1 class="success-heading">Yayyy! ❤️</h1>
+            <p class="sub-text">I knew you'd say yes, Pooh! Forever & Always.</p>
+        </div>
+
+        <div class="audio-player">
+            <span>🎵 Listening to: Our Favorite Track</span>
+            <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" preload="auto" controls style="width: 200px; height: 30px; margin-left: 10px;"></audio>
         </div>
     </div>
 
     <script>
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        const questionText = document.getElementById('question');
-        const mainGif = document.getElementById('mainGif');
-        const music = document.getElementById('valentineMusic');
-
-        // 1. PERSONALIZATION LOGIC
-        // This checks the URL for ?name=bubu
-        const urlParams = new URLSearchParams(window.location.search);
-        const name = urlParams.get('bubu');
-        if (name) {
-            questionText.innerText = `Will you be mine forever, ${Satya}? 🌹`;
-        }
-
-        // 2. THE DANCING "NO" BUTTON LOGIC
-        // Works on Mouse (Desktop) and Touch (Mobile)
+        // Makes the 'No' button playfully run away whenever hovered or clicked
         function moveButton() {
-            // Get window dimensions
-            const width = window.innerWidth;
-            const height = window.innerHeight;
+            const noBtn = document.getElementById('no-btn');
             
-            // Calculate random position
-            // We keep it within 80% of the screen so it doesn't disappear
-            const newX = Math.random() * (width - noBtn.offsetWidth) - (width / 2);
-            const newY = Math.random() * (height - noBtn.offsetHeight) - (height / 2);
-
-            // Apply movement using Transform to keep it relative to the container
-            noBtn.style.position = 'absolute';
-            noBtn.style.left = `${Math.random() * 80 + 10}%`;
-            noBtn.style.top = `${Math.random() * 80 + 10}%`;
+            // Generate random coordinates within the bounding box range
+            const x = Math.floor(Math.random() * 250) - 125;
+            const y = Math.floor(Math.random() * 150) - 75;
+            
+            noBtn.style.transform = translate(${x}px, ${y}px);
+            
+            // Playfully grow the Yes button slightly larger every time they try to hit No
+            const yesBtn = document.getElementById('yes-btn');
+            const currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+            if (currentSize < 40) {
+                yesBtn.style.fontSize = (currentSize * 1.05) + 'px';
+                yesBtn.style.padding = '15px 45px';
+            }
         }
 
-        noBtn.addEventListener('mouseover', moveButton); // For PC cursor
-        noBtn.addEventListener('touchstart', moveButton); // For Mobile tap
-
-        // 3. THE "YES" CELEBRATION
-        yesBtn.addEventListener('click', () => {
-            // A. Change the content
-            questionText.innerHTML = `YAY! I love you ${name ? name : ''}! ❤️`;
-            mainGif.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpwaGZ4ZzB4ZzB4ZzB4ZzB4ZzB4ZzB4ZzB4ZzB4ZzB4ZzB4ZzAmbGl2ZT1mYWxzZQ/KztT2c4u8mYYUiMKdJ/giphy.gif";
+        // Seamless screen transition upon hitting "Yes"
+        function celebrate() {
+            document.getElementById('proposal-content').style.display = 'none';
+            document.getElementById('success-content').style.display = 'block';
             
-            // B. Hide buttons
-            noBtn.style.display = 'none';
-            yesBtn.style.display = 'none';
-
-            // C. Play Music (Browsers allow audio only after interaction)
-            music.play();
-
-            // D. Trigger Confetti
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
+            // Transform the central card window into a tiny celebration zone
+            const mediaBox = document.getElementById('media-box');
+            mediaBox.innerHTML = '<div style="font-size: 5rem; animation: bounce 0.5s infinite alternate;">🎉👩‍❤️‍👨✨</div>';
+            mediaBox.style.background = 'linear-gradient(45deg, #ff758f, #ffb3c1)';
             
-            // Keep shooting confetti for a few seconds
-            var duration = 3000;
-            var end = Date.now() + duration;
-
-            (function frame() {
-                confetti({
-                    particleCount: 5,
-                    angle: 60,
-                    spread: 55,
-                    origin: { x: 0 }
-                });
-                confetti({
-                    particleCount: 5,
-                    angle: 120,
-                    spread: 55,
-                    origin: { x: 1 }
-                });
-            
-                if (Date.now() < end) {
-                    requestAnimationFrame(frame);
-                }
-            }());
-        });
+            // Un-mute or play the audio track seamlessly if it hasn't started
+            const audio = document.getElementById('bg-music');
+            audio.play().catch(e => console.log("Audio autoplay prevented, user interaction handled it."));
+        }
     </script>
 </body>
 </html>
